@@ -34,18 +34,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(5924));
-const github_1 = __importDefault(__nccwpck_require__(8262));
+const github = __importStar(__nccwpck_require__(8262));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const github_token = core.getInput('GITHUB_TOKEN');
-            const ocktoKit = github_1.default.getOctokit(github_token);
-            const context = github_1.default.context;
+            const ocktoKit = github.getOctokit(github_token);
+            const context = github.context;
             const sha = context.sha;
             const result = yield ocktoKit.rest.repos.listPullRequestsAssociatedWithCommit({
                 owner: context.repo.owner,
