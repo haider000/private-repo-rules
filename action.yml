@@ -1,11 +1,15 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'private repo rules'
+description: 'Actions to allow and disallow a PR'
+author: 'haider000'
 inputs:
-  milliseconds: # change this
+  rules: # change this
+    required: false
+    description: 'rules for allowing and disallowing pull requests'
+    default: '["allow if from (.*) to (.*)"]'
+  GITHUB_TOKEN: # change this
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'Token for accesing pr name'
+    default: ''
 runs:
   using: 'node12'
   main: 'dist/index.js'
