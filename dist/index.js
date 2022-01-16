@@ -38,31 +38,16 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(5924));
 const github = __importStar(__nccwpck_require__(8262));
 function run() {
-    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const github_token = core.getInput('GITHUB_TOKEN');
-            const ocktoKit = github.getOctokit(github_token);
             const context = github.context;
-            const sha = context.sha;
-            console.log(context.payload.pull_request);
-            console.log((_a = context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.base);
-            console.log((_b = context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.head);
-            console.log(context.repo.owner, context.repo.repo, sha);
-            const result = yield ocktoKit.rest.repos.listPullRequestsAssociatedWithCommit({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                commit_sha: sha
-            });
-            console.log(result.data);
-            const pullRequests = result.data.filter(pullRequest => pullRequest.state === 'open');
-            console.log(pullRequests);
-            const pr = pullRequests.length > 0 && pullRequests[0];
-            if (!pr)
+            if (!context.payload.pull_request) {
+                core.setFailed('No PR Found, only run when pull request happens');
                 return;
-            const prFromBranch = pr.base.ref;
-            const prToBranch = pr.head.ref;
-            console.log(JSON.stringify({ prFromBranch, prToBranch }));
+            }
+            const prFromBranch = context.payload.pull_request.base.ref;
+            const prToBranch = context.payload.pull_request.head.ref;
+            console.log({ prFromBranch, prToBranch });
             const rulesInput = core.getInput('rules');
             const rules = JSON.parse(rulesInput);
             // convert to an array
@@ -73,7 +58,7 @@ function run() {
                 const toBranch = arr[5];
                 return { allow, fromBranch, toBranch, rule: str };
             });
-            console.log(JSON.stringify(conditions));
+            console.log('conditions', conditions);
             let matchedRule = '';
             // it will pass or fail based on the first condition that matches
             for (const condition of conditions) {
@@ -82,7 +67,7 @@ function run() {
                 if (fromMatch && toMatch) {
                     if (condition.allow) {
                         // if a rule matches skip and pass the test
-                        core.debug(`Passed: Rule matched "${condition.rule}"`);
+                        core.info(`Passed: Rule matched "${condition.rule}"`);
                         matchedRule = condition.rule;
                         break;
                     }
@@ -93,7 +78,7 @@ function run() {
                 }
             }
             if (!matchedRule) {
-                core.debug('Passed: No rules matched');
+                core.info('Passed: No rules matched');
             }
         }
         catch (error) {
