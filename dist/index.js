@@ -38,13 +38,16 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(5924));
 const github = __importStar(__nccwpck_require__(8262));
 function run() {
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const github_token = core.getInput('GITHUB_TOKEN');
             const ocktoKit = github.getOctokit(github_token);
             const context = github.context;
             const sha = context.sha;
-            console.log(context);
+            console.log(context.payload.pull_request);
+            console.log((_a = context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.base);
+            console.log((_b = context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.head);
             console.log(context.repo.owner, context.repo.repo, sha);
             const result = yield ocktoKit.rest.repos.listPullRequestsAssociatedWithCommit({
                 owner: context.repo.owner,

@@ -7,7 +7,9 @@ async function run(): Promise<void> {
     const ocktoKit = github.getOctokit(github_token)
     const context = github.context
     const sha = context.sha
-    console.log(context)
+    console.log(context.payload.pull_request)
+    console.log(context.payload.pull_request?.base)
+    console.log(context.payload.pull_request?.head)
     console.log(context.repo.owner, context.repo.repo, sha)
     const result =
       await ocktoKit.rest.repos.listPullRequestsAssociatedWithCommit({
