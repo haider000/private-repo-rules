@@ -7,7 +7,7 @@ async function run(): Promise<void> {
     const ocktoKit = github.getOctokit(github_token)
     const context = github.context
     const sha = context.sha
-
+    console.log(context.repo.owner, context.repo.repo, sha)
     const result =
       await ocktoKit.rest.repos.listPullRequestsAssociatedWithCommit({
         owner: context.repo.owner,
@@ -15,9 +15,12 @@ async function run(): Promise<void> {
         commit_sha: sha
       })
 
+    console.log(result.data)
     const pullRequests = result.data.filter(
       pullRequest => pullRequest.state === 'open'
     )
+
+    console.log(pullRequests)
 
     const pr = pullRequests.length > 0 && pullRequests[0]
 
