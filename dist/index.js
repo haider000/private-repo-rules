@@ -55,7 +55,7 @@ function run() {
                 return;
             const prFromBranch = pr.base.ref;
             const prToBranch = pr.head.ref;
-            core.debug(JSON.stringify({ prFromBranch, prToBranch }));
+            console.log(JSON.stringify({ prFromBranch, prToBranch }));
             const rulesInput = core.getInput('rules');
             const rules = JSON.parse(rulesInput);
             // convert to an array
@@ -66,6 +66,7 @@ function run() {
                 const toBranch = arr[5];
                 return { allow, fromBranch, toBranch, rule: str };
             });
+            console.log(JSON.stringify(conditions));
             let matchedRule = '';
             // it will pass or fail based on the first condition that matches
             for (const condition of conditions) {
