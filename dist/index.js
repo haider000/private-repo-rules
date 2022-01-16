@@ -45,8 +45,8 @@ function run() {
                 core.setFailed('No PR Found, only run when pull request happens');
                 return;
             }
-            const prFromBranch = context.payload.pull_request.base.ref;
-            const prToBranch = context.payload.pull_request.head.ref;
+            const prFromBranch = context.payload.pull_request.head.ref;
+            const prToBranch = context.payload.pull_request.base.ref;
             console.log({ prFromBranch, prToBranch });
             const rulesInput = core.getInput('rules');
             const rules = JSON.parse(rulesInput);

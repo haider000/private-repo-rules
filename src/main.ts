@@ -10,8 +10,8 @@ async function run(): Promise<void> {
       return
     }
 
-    const prFromBranch = context.payload.pull_request.base.ref as string
-    const prToBranch = context.payload.pull_request.head.ref as string
+    const prFromBranch = context.payload.pull_request.head.ref as string
+    const prToBranch = context.payload.pull_request.base.ref as string
 
     console.log({prFromBranch, prToBranch})
 
