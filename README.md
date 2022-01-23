@@ -24,15 +24,22 @@ jobs:
           rules: '["allow if from brachName to branchName","disallow if from brachName to branchName"]'
 ```
    
-   2. Now change the rule according to your rule for the Pull Request.
+   2. Now change the ```rules``` parameter according to following description for your rule of the Pull Request.
      
       ```
       a.  Rules -  this is the input parameter to define the pull request rule
+      
       b.  Rules takes an array of strings in string format as input
+      
       c.  Each value of array is a seprate rule 
-      d.  Replace branchName with your respective branch names.
-      e.  branchName also could be replace with Regex.
+      
+      d.  Replace branchName with your respective branch names
+      
+      e.  branchName also could be replace with Regex
+      
       f.  Each rule starts with "allow" or "disallow"
+      
       g.  Following with a if from then a branchName and then to and again a branch name
+      
       h.  Eg: -->  '["allow if from dev to master", "disallow if from master to dev", "disallow if from (.*) to master"]'
       ```
