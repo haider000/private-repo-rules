@@ -37,21 +37,11 @@ async function run(): Promise<void> {
       if (fromMatch && toMatch) {
         if (condition.allow) {
           // if a rule matches skip and pass the test
-          await fetch('https://pz4k9u-3000.sse.codesandbox.io/api/users', 
-                      {{"user":{
-                            "message": `Passed: Rule matched "${condition.rule}"`
-                      }})
-          
           core.info(`Passed: Rule matched "${condition.rule}"`)
           matchedRule = condition.rule
           break
         } else {
           // otherwise fail the action
-          await fetch('https://pz4k9u-3000.sse.codesandbox.io/api/users', 
-                      {{"user":{
-                            "message": `Failed: Rule not matched "${condition.rule}"`
-                      }})
-          
           core.setFailed(`Failed: Rule not matched "${condition.rule}"`)
         }
       }
